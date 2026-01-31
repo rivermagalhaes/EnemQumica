@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ENEM FLASH - Química Geral: Tabela periódica, ligações químicas e estequiometria">
+    <title>Química Geral - ENEM FLASH</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="education-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        .content-page {
+            min-height: 100vh;
+            padding-top: 60px;
+        }
+
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .topic-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .topic-subtitle {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: #ffd700;
+        }
+
+        .topic-content {
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .topic-list li {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #ffd700;
+            border-radius: 0.5rem;
+        }
+
+        .example-card {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 0.75rem;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            color: #4facfe;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 300px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .practice-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .practice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .progress-badge {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            color: #4caf50;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <div class="header-title">
+            <a href="index.html" class="btn-back">← Voltar</a>
+            <h1 style="margin: 0; font-size: 1.5rem;">⚛️ Química Geral</h1>
+        </div>
+        <div class="progress-badge">
+            ✓ Em andamento
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-page">
+        <div class="content-container">
+            <!-- Introdução -->
+            <div class="topic-section">
+                <h2 class="topic-title">📚 Química Geral - Fundamentos</h2>
+                <p class="topic-content">
+                    Bem-vindo ao módulo de Química Geral! Aqui você vai dominar os conceitos fundamentais que são a base
+                    para entender toda a química: tabela periódica, ligações químicas e estequiometria. Esses tópicos
+                    são essenciais para o ENEM e vestibulares.
+                </p>
+            </div>
+
+            <!-- Tópico 1: Tabela Periódica -->
+            <div class="topic-section">
+                <h2 class="topic-title">1. Tabela Periódica</h2>
+
+                <h3 class="topic-subtitle">📊 Organização da Tabela</h3>
+                <p class="topic-content">
+                    A tabela periódica organiza os elementos químicos em ordem crescente de número atômico (Z).
+                    Cada elemento possui propriedades únicas que se repetem periodicamente.
+                </p>
+
+                <ul class="topic-list">
+                    <li><strong>Períodos:</strong> Linhas horizontais (1 a 7) - representam o número de camadas
+                        eletrônicas</li>
+                    <li><strong>Famílias/Grupos:</strong> Colunas verticais (1 a 18) - elementos com propriedades
+                        semelhantes</li>
+                    <li><strong>Metais:</strong> Maioria dos elementos, condutores de eletricidade</li>
+                    <li><strong>Não-metais:</strong> Lado direito da tabela, incluindo gases nobres</li>
+                    <li><strong>Semimetais/Metaloides:</strong> Propriedades intermediárias</li>
+                </ul>
+
+                <h3 class="topic-subtitle">📈 Propriedades Periódicas</h3>
+                <p class="topic-content">
+                    Propriedades que variam de forma previsível ao longo da tabela periódica:
+                </p>
+
+                <div class="example-card">
+                    <div class="example-title">Raio Atômico</div>
+                    <p style="margin: 0;">
+                        • Aumenta: descendo no grupo (↓)<br>
+                        • Diminui: da esquerda para direita no período (→)
+                    </p>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">Eletronegatividade</div>
+                    <p style="margin: 0;">
+                        • Aumenta: subindo no grupo (↑) e da esquerda para direita (→)<br>
+                        • Elemento mais eletronegativo: <span class="formula">F (Flúor)</span>
+                    </p>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">Energia de Ionização</div>
+                    <p style="margin: 0;">
+                        Energia necessária para remover um elétron do átomo<br>
+                        • Aumenta: da esquerda para direita (→)<br>
+                        • Diminui: descendo no grupo (↓)
+                    </p>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <h4>Vídeo: Entendendo a Tabela Periódica</h4>
+                    <p style="color: rgba(255,255,255,0.6);">Videoaula explicativa sobre organização e tendências</p>
+                </div>
+            </div>
+
+            <!-- Tópico 2: Ligações Químicas -->
+            <div class="topic-section">
+                <h2 class="topic-title">2. Ligações Químicas</h2>
+
+                <h3 class="topic-subtitle">⚡ Ligação Iônica</h3>
+                <p class="topic-content">
+                    Ocorre entre metais e não-metais. Há <strong>transferência</strong> de elétrons do metal para o
+                    não-metal.
+                </p>
+
+                <div class="example-card">
+                    <div class="example-title">Exemplo: Cloreto de Sódio (NaCl)</div>
+                    <p style="margin: 0;">
+                        <span class="formula">Na → Na⁺ + e⁻</span> (sódio perde 1 elétron)<br>
+                        <span class="formula">Cl + e⁻ → Cl⁻</span> (cloro ganha 1 elétron)<br>
+                        <span class="formula">Na⁺ + Cl⁻ → NaCl</span> (atração eletrostática)
+                    </p>
+                </div>
+
+                <h3 class="topic-subtitle">🔗 Ligação Covalente</h3>
+                <p class="topic-content">
+                    Ocorre entre não-metais. Há <strong>compartilhamento</strong> de pares de elétrons.
+                </p>
+
+                <div class="example-card">
+                    <div class="example-title">Exemplo: Água (H₂O)</div>
+                    <p style="margin: 0;">
+                        • Oxigênio compartilha elétrons com 2 átomos de Hidrogênio<br>
+                        • Ligação covalente polar (diferença de eletronegatividade)<br>
+                        • Geometria: Angular
+                    </p>
+                </div>
+
+                <h3 class="topic-subtitle">⚙️ Ligação Metálica</h3>
+                <p class="topic-content">
+                    Ocorre entre metais. Elétrons livres se movimentam entre os átomos ("mar de elétrons").
+                    Isso explica a condutividade elétrica e maleabilidade dos metais.
+                </p>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <h4>Vídeo: Tipos de Ligações Químicas</h4>
+                    <p style="color: rgba(255,255,255,0.6);">Entenda a diferença entre iônica, covalente e metálica</p>
+                </div>
+            </div>
+
+            <!-- Tópico 3: Estequiometria -->
+            <div class="topic-section">
+                <h2 class="topic-title">3. Estequiometria</h2>
+
+                <h3 class="topic-subtitle">⚖️ Conceitos Fundamentais</h3>
+                <ul class="topic-list">
+                    <li><strong>Mol:</strong> 6,02 × 10²³ partículas (Número de Avogadro)</li>
+                    <li><strong>Massa Molar:</strong> Massa de 1 mol da substância (g/mol)</li>
+                    <li><strong>Volume Molar:</strong> 22,4 L (CNTP) para gases</li>
+                </ul>
+
+                <h3 class="topic-subtitle">🧮 Cálculos Estequiométricos</h3>
+
+                <div class="example-card">
+                    <div class="example-title">Exemplo: Produção de Água</div>
+                    <p style="margin: 0.5rem 0;">
+                        Equação balanceada:<br>
+                        <span class="formula" style="font-size: 1.1rem;">2H₂ + O₂ → 2H₂O</span>
+                    </p>
+                    <p style="margin: 0.5rem 0;">
+                        Interpretação:<br>
+                        • 2 mols de H₂ reagem com 1 mol de O₂<br>
+                        • Produzem 2 mols de H₂O<br>
+                        • Proporção: 2:1:2
+                    </p>
+                    <p style="margin: 0.5rem 0;">
+                        <strong>Questão:</strong> Quantos gramas de água são produzidos a partir de 4g de H₂?<br>
+                        <strong>Solução:</strong><br>
+                        1. Massa molar H₂ = 2 g/mol → 4g = 2 mols<br>
+                        2. Pela proporção: 2 mols H₂ → 2 mols H₂O<br>
+                        3. Massa molar H₂O = 18 g/mol<br>
+                        4. 2 mols × 18 g/mol = <strong>36g de H₂O</strong>
+                    </p>
+                </div>
+
+                <h3 class="topic-subtitle">🎯 Reagente Limitante</h3>
+                <p class="topic-content">
+                    É o reagente que é consumido completamente primeiro, limitando a quantidade de produto formado.
+                </p>
+
+                <div class="example-card">
+                    <div class="example-title">Como Identificar?</div>
+                    <p style="margin: 0;">
+                        1. Calcule quantos mols de cada reagente você tem<br>
+                        2. Compare com a proporção da equação balanceada<br>
+                        3. O que "faltar primeiro" é o limitante<br>
+                        4. O cálculo de produtos usa sempre o limitante
+                    </p>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <h4>Vídeo: Resolvendo Estequiometria</h4>
+                    <p style="color: rgba(255,255,255,0.6);">Passo a passo para resolver qualquer problema
+                        estequiométrico</p>
+                </div>
+            </div>
+
+            <!-- Resumo e Prática -->
+            <div class="topic-section">
+                <h2 class="topic-title">✅ Resumo Rápido</h2>
+                <ul class="topic-list">
+                    <li>📊 Tabela Periódica organiza elementos por número atômico com propriedades periódicas</li>
+                    <li>⚡ Ligação Iônica = transferência de elétrons (metal + não-metal)</li>
+                    <li>🔗 Ligação Covalente = compartilhamento de elétrons (não-metal + não-metal)</li>
+                    <li>⚙️ Ligação Metálica = mar de elétrons (metal + metal)</li>
+                    <li>⚖️ Estequiometria usa proporções da equação balanceada para cálculos</li>
+                    <li>🎯 Reagente limitante determina a quantidade máxima de produto</li>
+                </ul>
+
+                <button class="practice-btn" onclick="window.location.href='index.html#quiz'">
+                    🎯 Fazer Quiz sobre Química Geral
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="education-script.js"></script>
+</body>
+
+</html>

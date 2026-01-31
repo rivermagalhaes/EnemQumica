@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Orgânica Play - Química orgânica nunca foi tão divertida! Jogos educativos para o ensino médio.">
+    <title>Orgânica Play - ENEM FLASH</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="education-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="organica-styles.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <div class="header-title">
+            <a href="index.html" class="btn-back">← Voltar</a>
+            <h1 style="margin: 0; font-size: 1.5rem;">🧬 Orgânica Play</h1>
+        </div>
+        <div class="user-xp" id="user-xp-display">
+            <span id="xp-value">0 XP</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="game-container">
+        <!-- Hero Section -->
+        <section class="hero-game">
+            <div class="hero-content-game">
+                <h1 class="hero-title-game">Química Orgânica Nunca Foi Tão Divertida!</h1>
+                <p class="hero-subtitle-game">
+                    Do metano ao DNA - aprenda brincando com jogos interativos e desafios
+                </p>
+            </div>
+            <div class="hero-image-game">
+                <img src="C:/Users/1741643/.gemini/antigravity/brain/9bdd09e1-d712-40a2-abc8-e948fdfee7df/organica_play_hero_1769809656433.png"
+                    alt="Moléculas Divertidas" class="game-hero-img">
+            </div>
+        </section>
+
+        <!-- Game Modules -->
+        <section class="modules-grid">
+            <!-- Module 1: Molecule Builder -->
+            <div class="game-module" id="module-builder">
+                <div class="module-icon">🧬</div>
+                <h3 class="module-title">Construtor de Moléculas</h3>
+                <p class="module-description">Monte moléculas orgânicas arrastando átomos e ligações. Validação em tempo
+                    real!</p>
+                <div class="module-stats">
+                    <span class="stat-badge">🎯 10 Desafios</span>
+                    <span class="stat-badge">⭐ +20 XP por molécula</span>
+                </div>
+                <button class="btn-module" onclick="openMoleculeBuilder()">
+                    Começar a Construir →
+                </button>
+            </div>
+
+            <!-- Module 2: Memory Game -->
+            <div class="game-module" id="module-memory">
+                <div class="module-icon">🎮</div>
+                <h3 class="module-title">Memory Game - Funções Orgânicas</h3>
+                <p class="module-description">Jogo da memória com funções orgânicas. 5 níveis progressivos!</p>
+                <div class="module-stats">
+                    <span class="stat-badge">📚 5 Níveis</span>
+                    <span class="stat-badge">⭐ +30 XP por nível</span>
+                </div>
+                <button class="btn-module" onclick="openMemoryGame()">
+                    Jogar Agora →
+                </button>
+            </div>
+
+            <!-- Module 3: Daily Life Detective -->
+            <div class="game-module" id="module-detective">
+                <div class="module-icon">🔍</div>
+                <h3 class="module-title">Detetive Químico - Cotidiano</h3>
+                <p class="module-description">Encontre compostos orgânicos em cenas do dia a dia. Aprenda aplicações
+                    práticas!</p>
+                <div class="module-stats">
+                    <span class="stat-badge">🏠 4 Cenários</span>
+                    <span class="stat-badge">⭐ +15 XP por descoberta</span>
+                </div>
+                <button class="btn-module" onclick="openDetectiveMode()">
+                    Investigar →
+                </button>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="achievements-section">
+            <h2 class="section-title">🏆 Conquistas Disponíveis</h2>
+            <div class="achievements-grid" id="achievements-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Molecule Builder Modal -->
+    <div class="modal-game hidden" id="builder-modal">
+        <div class="modal-overlay-game" onclick="closeModal('builder-modal')"></div>
+        <div class="modal-content-game">
+            <button class="modal-close-game" onclick="closeModal('builder-modal')">✕</button>
+
+            <h2 class="modal-title">🧬 Construtor de Moléculas</h2>
+
+            <div class="builder-container">
+                <!-- Atom Palette -->
+                <div class="atom-palette">
+                    <h4>Átomos Disponíveis:</h4>
+                    <div class="atoms-list">
+                        <div class="atom-piece" draggable="true" data-element="C" data-valence="4">
+                            <span class="atom-symbol">C</span>
+                            <span class="atom-name">Carbono</span>
+                        </div>
+                        <div class="atom-piece" draggable="true" data-element="H" data-valence="1">
+                            <span class="atom-symbol">H</span>
+                            <span class="atom-name">Hidrogênio</span>
+                        </div>
+                        <div class="atom-piece" draggable="true" data-element="O" data-valence="2">
+                            <span class="atom-symbol">O</span>
+                            <span class="atom-name">Oxigênio</span>
+                        </div>
+                        <div class="atom-piece" draggable="true" data-element="N" data-valence="3">
+                            <span class="atom-symbol">N</span>
+                            <span class="atom-name">Nitrogênio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workspace -->
+                <div class="molecule-workspace" id="workspace">
+                    <p class="workspace-hint">Arraste átomos para cá para começar a construir!</p>
+                </div>
+
+                <!-- Challenge Area -->
+                <div class="challenge-panel">
+                    <h4>🎯 Desafio Atual:</h4>
+                    <div id="current-challenge">
+                        <p><strong>Monte: Metano (CH₄)</strong></p>
+                        <p class="hint">Dica: 1 Carbono + 4 Hidrogênios</p>
+                    </div>
+                    <button class="btn-check" onclick="checkMolecule()">Verificar Molécula</button>
+                    <button class="btn-clear" onclick="clearWorkspace()">Limpar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Game Modal -->
+    <div class="modal-game hidden" id="memory-modal">
+        <div class="modal-overlay-game" onclick="closeModal('memory-modal')"></div>
+        <div class="modal-content-game memory-content">
+            <button class="modal-close-game" onclick="closeModal('memory-modal')">✕</button>
+
+            <div class="memory-header">
+                <h2 class="modal-title">🎮 Memory Game</h2>
+                <div class="game-stats">
+                    <span>Nível: <strong id="current-level">1</strong></span>
+                    <span>Pares: <strong id="pairs-found">0</strong>/<strong id="total-pairs">0</strong></span>
+                    <span>Tempo: <strong id="timer">0s</strong></span>
+                </div>
+            </div>
+
+            <div class="memory-board" id="memory-board">
+                <!-- Cards populated by JavaScript -->
+            </div>
+
+            <div class="memory-footer">
+                <button class="btn-hint" onclick="useHint()">💡 Dica (-10 XP)</button>
+                <button class="btn-restart" onclick="restartMemoryGame()">🔄 Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detective Modal -->
+    <div class="modal-game hidden" id="detective-modal">
+        <div class="modal-overlay-game" onclick="closeModal('detective-modal')"></div>
+        <div class="modal-content-game detective-content">
+            <button class="modal-close-game" onclick="closeModal('detective-modal')">✕</button>
+
+            <h2 class="modal-title">🔍 Detetive Químico</h2>
+
+            <div class="scene-selector">
+                <button class="scene-btn active" onclick="loadScene('kitchen')">🏠 Cozinha</button>
+                <button class="scene-btn" onclick="loadScene('bathroom')">🚿 Banheiro</button>
+                <button class="scene-btn" onclick="loadScene('garage')">🚗 Garagem</button>
+                <button class="scene-btn" onclick="loadScene('pharmacy')">💊 Farmácia</button>
+            </div>
+
+            <div class="mission-panel">
+                <p id="current-mission">Missão: Encontre 5 compostos orgânicos na cozinha!</p>
+                <p id="mission-progress">Progresso: <strong>0/5</strong></p>
+            </div>
+
+            <div class="detective-scene" id="detective-scene">
+                <!-- Scene with hotspots populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Compound Info Popup -->
+    <div class="compound-popup hidden" id="compound-popup">
+        <button class="popup-close" onclick="closePopup()">✕</button>
+        <div class="popup-content">
+            <h3 id="compound-name"></h3>
+            <p class="compound-molecule" id="compound-molecule"></p>
+            <p class="compound-formula" id="compound-formula"></p>
+            <p class="compound-function" id="compound-function"></p>
+            <p class="compound-fact" id="compound-fact"></p>
+        </div>
+    </div>
+
+    <script src="education-script.js"></script>
+    <script src="organica-game.js"></script>
+</body>
+
+</html>

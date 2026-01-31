@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="ChemMaster - Aprenda química de forma interativa, intuitiva e divertida! Tabela periódica 3D, quiz, simuladores e muito mais.">
+    <title>ChemMaster - Domine a Química de Forma Interativa</title>
+    <link rel="stylesheet" href="chemmaster-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="chem-bg">
+        <div class="molecule mol-1"></div>
+        <div class="molecule mol-2"></div>
+        <div class="molecule mol-3"></div>
+        <div class="atom-orbit"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⚛️</span>
+                <span class="logo-text">ChemMaster</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Início</a>
+                <a href="#periodic-table" class="nav-link">Tabela Periódica</a>
+                <a href="#quiz" class="nav-link">Quiz</a>
+                <a href="#learn" class="nav-link">Aprender</a>
+                <button class="btn-nav-login" id="nav-login">Entrar</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Domine a Química de Forma
+                <span class="gradient-text">Interativa e Divertida</span>
+            </h1>
+            <p class="hero-subtitle">
+                Tabela periódica 3D, simuladores de moléculas, quiz gamificado e muito mais!
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary btn-hero" id="start-learning">
+                    <span class="btn-icon-left">🚀</span>
+                    Começar Agora
+                </button>
+                <button class="btn-secondary btn-hero" id="explore-table">
+                    <span class="btn-icon-left">⚛️</span>
+                    Ver Tabela Periódica
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">118</div>
+                    <div class="stat-label">Elementos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Questões</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Simuladores</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="C:/Users/1741643/.gemini/antigravity/brain/9bdd09e1-d712-40a2-abc8-e948fdfee7df/chemmaster_hero_1769807128500.png"
+                alt="Química Interativa" class="hero-img">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="learn">
+        <h2 class="section-title">Recursos Interativos</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚛️</div>
+                <h3 class="feature-title">Tabela Periódica 3D</h3>
+                <p class="feature-description">Explore todos os 118 elementos com visualizações interativas e
+                    informações detalhadas</p>
+                <button class="btn-feature" data-feature="periodic-table">Explorar →</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧪</div>
+                <h3 class="feature-title">Simulador de Moléculas</h3>
+                <p class="feature-description">Construa e visualize moléculas 3D, entenda ligações químicas de forma
+                    visual</p>
+                <button class="btn-feature" data-feature="simulator">Simular →</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Quiz Gamificado</h3>
+                <p class="feature-description">Teste seus conhecimentos, ganhe pontos e conquistas enquanto aprende</p>
+                <button class="btn-feature" data-feature="quiz">Jogar →</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧮</div>
+                <h3 class="feature-title">Calculadora Estequiométrica</h3>
+                <p class="feature-description">Resolva problemas de estequiometria com passo-a-passo detalhado e animado
+                </p>
+                <button class="btn-feature" data-feature="calculator">Calcular →</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3 class="feature-title">Laboratório Virtual</h3>
+                <p class="feature-description">Experimente com gases ideais, leis de pressão e temperatura sem riscos
+                </p>
+                <button class="btn-feature" data-feature="lab">Experimentar →</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Sistema de Conquistas</h3>
+                <p class="feature-description">Ganhe badges, suba de nível e compete com amigos no ranking global</p>
+                <button class="btn-feature" data-feature="achievements">Ver Conquistas →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Periodic Table Mini Preview -->
+    <section class="periodic-preview" id="periodic-table">
+        <h2 class="section-title">Tabela Periódica Interativa</h2>
+        <p class="section-subtitle">Clique em qualquer elemento para ver detalhes</p>
+        <div class="periodic-table-container">
+            <div class="periodic-table" id="periodic-table-grid">
+                <!-- A tabela será gerada dinamicamente pelo JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section hidden" id="quiz">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <button class="btn-back" id="quiz-back">← Voltar</button>
+                <div class="quiz-stats">
+                    <span class="quiz-stat">Questão <span id="current-question">1</span /10</span>
+                        <span class="quiz-stat">Pontos: <span id="quiz-points">0</span></span>
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-card">
+                    <h3 class="question-text" id="question-text"></h3>
+                    <div class="answers-grid" id="answers-grid">
+                        <!-- Respostas geradas dinamicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn-quiz-submit hidden" id="submit-answer">Confirmar Resposta</button>
+                <button class="btn-quiz-next hidden" id="next-question">Próxima Questão →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Element Modal -->
+    <div class="modal hidden" id="element-modal">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div class="element-details" id="element-details">
+                <!-- Detalhes do elemento gerados dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Widget (floating) -->
+    <div class="profile-widget" id="profile-widget">
+        <div class="profile-avatar">
+            <span class="profile-level" id="user-level">1</span>
+        </div>
+        <div class="profile-xp">
+            <div class="xp-bar">
+                <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+            </div>
+            <span class="xp-text" id="xp-text">0 / 100 XP</span>
+        </div>
+    </div>
+
+    <script src="chemmaster-data.js"></script>
+    <script src="chemmaster-app.js"></script>
+</body>
+
+</html>

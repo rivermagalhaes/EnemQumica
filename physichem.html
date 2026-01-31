@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PhysChem Lab - Laboratórios virtuais de Físico-Química para o ENEM">
+    <title>PhysChem Lab - ENEM FLASH</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="education-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="physichem-styles.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <div class="header-title">
+            <a href="index.html" class="btn-back">← Voltar</a>
+            <h1 style="margin: 0; font-size: 1.5rem;">🧪 PhysChem Lab</h1>
+        </div>
+        <div class="user-xp" id="user-xp-display">
+            <span id="xp-value-pc">0 XP</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lab-container">
+        <!-- Hero Section -->
+        <section class="hero-lab">
+            <div class="hero-content-lab">
+                <h1 class="hero-title-lab">A Ciência Que Você Pode Ver Acontecendo!</h1>
+                <p class="hero-subtitle-lab">
+                    Laboratórios virtuais interativos de Físico-Química com simulações em tempo real
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Simuladores</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">Módulos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">ENEM</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simulators Grid -->
+        <section class="simulators-grid">
+            <!-- Simulator 1: Thermochemistry -->
+            <div class="simulator-card thermo">
+                <div class="sim-icon">🔥</div>
+                <h3 class="sim-title">Termoquímica</h3>
+                <p class="sim-description">Visualize reações exotérmicas e endotérmicas com animações de calor em tempo
+                    real</p>
+                <div class="sim-topics">
+                    <span class="topic-tag">Entalpia</span>
+                    <span class="topic-tag">ΔH</span>
+                    <span class="topic-tag">Lei de Hess</span>
+                </div>
+                <button class="btn-simulate" onclick="openSimulator('thermo')">
+                    Abrir Simulador →
+                </button>
+            </div>
+
+            <!-- Simulator 2: Kinetics -->
+            <div class="simulator-card kinetics">
+                <div class="sim-icon">⚡</div>
+                <h3 class="sim-title">Cinética Química</h3>
+                <p class="sim-description">Controle fatores que afetam a velocidade das reações com teoria das colisões
+                </p>
+                <div class="sim-topics">
+                    <span class="topic-tag">Velocidade</span>
+                    <span class="topic-tag">Colisões</span>
+                    <span class="topic-tag">Catalisadores</span>
+                </div>
+                <button class="btn-simulate" onclick="openSimulator('kinetics')">
+                    Abrir Simulador →
+                </button>
+            </div>
+
+            <!-- Simulator 3: Solutions -->
+            <div class="simulator-card solutions">
+                <div class="sim-icon">💧</div>
+                <h3 class="sim-title">Soluções</h3>
+                <p class="sim-description">Calcule concentrações, prepare diluições e visualize curvas de solubilidade
+                </p>
+                <div class="sim-topics">
+                    <span class="topic-tag">Concentração</span>
+                    <span class="topic-tag">Diluição</span>
+                    <span class="topic-tag">mol/L</span>
+                </div>
+                <button class="btn-simulate" onclick="openSimulator('solutions')">
+                    Abrir Simulador →
+                </button>
+            </div>
+
+            <!-- Simulator 4: Gases -->
+            <div class="simulator-card gases">
+                <div class="sim-icon">🎈</div>
+                <h3 class="sim-title">Gases</h3>
+                <p class="sim-description">Explore as leis dos gases com simulação PVT interativa e gráficos em tempo
+                    real</p>
+                <div class="sim-topics">
+                    <span class="topic-tag">Boyle</span>
+                    <span class="topic-tag">Charles</span>
+                    <span class="topic-tag">PV=nRT</span>
+                </div>
+                <button class="btn-simulate" onclick="openSimulator('gases')">
+                    Abrir Simulador →
+                </button>
+            </div>
+        </section>
+
+        <!-- Coming Soon -->
+        <section class="coming-soon">
+            <h2>🚀 Em Breve</h2>
+            <div class="preview-grid">
+                <div class="preview-card">⚖️ Equilíbrio Químico</div>
+                <div class="preview-card">❄️ Propriedades Coligativas</div>
+                <div class="preview-card">🔋 Eletroquímica</div>
+                <div class="preview-card">☢️ Radioatividade</div>
+                <div class="preview-card">🧫 Separação de Misturas</div>
+                <div class="preview-card">📝 Questões ENEM</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL: Thermochemistry Simulator -->
+    <div class="modal-sim hidden" id="modal-thermo">
+        <div class="modal-overlay" onclick="closeSimulator()"></div>
+        <div class="modal-content-sim">
+            <button class="modal-close" onclick="closeSimulator()">✕</button>
+            <h2 class="modal-title">🔥 Simulador de Termoquímica</h2>
+
+            <div class="sim-layout">
+                <div class="controls-panel">
+                    <h4>Escolha a Reação:</h4>
+                    <select id="reaction-select" class="sim-select" onchange="selectReaction()">
+                        <option value="combustion">Combustão do Metano (CH₄)</option>
+                        <option value="photosynthesis">Fotossíntese</option>
+                        <option value="dissolving_nh4no3">Dissolução de NH₄NO₃</option>
+                        <option value="neutralization">Neutralização (HCl + NaOH)</option>
+                    </select>
+
+                    <div class="reaction-info" id="reaction-info">
+                        <p class="equation">CH₄ + 2O₂ → CO₂ + 2H₂O</p>
+                        <p class="description">Reação de combustão que libera energia</p>
+                    </div>
+
+                    <button class="btn-start" id="btn-start-reaction" onclick="startReaction()">
+                        ▶ Iniciar Reação
+                    </button>
+
+                    <div class="result-panel">
+                        <div class="result-item">
+                            <span class="label">ΔH:</span>
+                            <span class="value" id="deltaH-value">-890 kJ/mol</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Tipo:</span>
+                            <span class="type-badge" id="reaction-type">Exotérmica</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visualization-panel">
+                    <div class="thermometer-container">
+                        <div class="thermometer">
+                            <div class="mercury" id="mercury-level"></div>
+                            <div class="scale">
+                                <span>100°C</span>
+                                <span>50°C</span>
+                                <span>0°C</span>
+                                <span>-50°C</span>
+                            </div>
+                        </div>
+                        <div class="temp-display" id="temp-display">25°C</div>
+                    </div>
+
+                    <div class="energy-diagram" id="energy-diagram">
+                        <canvas id="enthalpy-canvas" width="300" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Kinetics Simulator -->
+    <div class="modal-sim hidden" id="modal-kinetics">
+        <div class="modal-overlay" onclick="closeSimulator()"></div>
+        <div class="modal-content-sim kinetics-modal">
+            <button class="modal-close" onclick="closeSimulator()">✕</button>
+            <h2 class="modal-title">⚡ Simulador de Cinética Química</h2>
+
+            <div class="sim-layout">
+                <div class="controls-panel">
+                    <h4>Fatores que Afetam a Velocidade:</h4>
+
+                    <div class="control-group">
+                        <label>Temperatura: <span id="temp-display-k">25°C</span></label>
+                        <input type="range" class="slider" id="temp-slider" min="0" max="100" value="25"
+                            oninput="updateKinetics()">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Concentração: <span id="conc-display">1.0 mol/L</span></label>
+                        <input type="range" class="slider" id="conc-slider" min="0.1" max="2.0" step="0.1" value="1.0"
+                            oninput="updateKinetics()">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Superfície de Contato:</label>
+                        <select id="surface-select" class="sim-select" onchange="updateKinetics()">
+                            <option value="3">Pó (Alta)</option>
+                            <option value="2">Grânulos (Média)</option>
+                            <option value="1">Bloco (Baixa)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="catalyst-check" onchange="updateKinetics()">
+                            Adicionar Catalisador
+                        </label>
+                    </div>
+
+                    <div class="result-panel">
+                        <div class="result-item">
+                            <span class="label">Velocidade:</span>
+                            <span class="value" id="rate-value">1.0 mol/L·s</span>
+                        </div>
+                        <div class="speedometer">
+                            <div class="speed-bar" id="speed-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visualization-panel">
+                    <div class="particles-container">
+                        <canvas id="particles-canvas" width="400" height="300"></canvas>
+                    </div>
+
+                    <div class="graph-container">
+                        <canvas id="rate-graph" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Solutions Simulator -->
+    <div class="modal-sim hidden" id="modal-solutions">
+        <div class="modal-overlay" onclick="closeSimulator()"></div>
+        <div class="modal-content-sim">
+            <button class="modal-close" onclick="closeSimulator()">✕</button>
+            <h2 class="modal-title">💧 Calculadora de Soluções</h2>
+
+            <div class="sim-layout">
+                <div class="controls-panel">
+                    <h4>Preparo de Solução:</h4>
+
+                    <div class="control-group">
+                        <label>Soluto:</label>
+                        <select id="solute-select" class="sim-select" onchange="updateSolute()">
+                            <option value="nacl">NaCl (Sal de Cozinha) - MM: 58.5</option>
+                            <option value="sugar">C₁₂H₂₂O₁₁ (Açúcar) - MM: 342</option>
+                            <option value="kno3">KNO₃ (Salitre) - MM: 101</option>
+                            <option value="cuso4">CuSO₄ (Sulfato de Cobre) - MM: 159.5</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Massa do Soluto (g):</label>
+                        <input type="number" id="mass-input" class="sim-input" value="58.5" min="0" step="0.1">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Volume da Solução (mL):</label>
+                        <input type="number" id="volume-input" class="sim-input" value="1000" min="1" step="1">
+                    </div>
+
+                    <button class="btn-calculate" onclick="calculateConcentration()">
+                        Calcular Concentração
+                    </button>
+
+                    <div class="result-panel">
+                        <div class="result-item">
+                            <span class="label">g/L:</span>
+                            <span class="value" id="gPerL-result">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">mol/L:</span>
+                            <span class="value" id="molPerL-result">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">%:</span>
+                            <span class="value" id="percent-result">-</span>
+                        </div>
+                    </div>
+
+                    <hr style="margin: 1.5rem 0; opacity: 0.2;">
+
+                    <h4>Diluição (C₁V₁ = C₂V₂):</h4>
+
+                    <div class="dilution-grid">
+                        <div class="control-group">
+                            <label>C₁ (mol/L):</label>
+                            <input type="number" id="c1-input" class="sim-input" value="2" step="0.1">
+                        </div>
+                        <div class="control-group">
+                            <label>V₁ (mL):</label>
+                            <input type="number" id="v1-input" class="sim-input" value="100" step="1">
+                        </div>
+                        <div class="control-group">
+                            <label>C₂ (mol/L):</label>
+                            <input type="number" id="c2-input" class="sim-input" value="0.5" step="0.1">
+                        </div>
+                        <div class="control-group">
+                            <label>V₂ (mL):</label>
+                            <input type="number" id="v2-input" class="sim-input" readonly>
+                        </div>
+                    </div>
+
+                    <button class="btn-calculate" onclick="calculateDilution()">
+                        Calcular V₂
+                    </button>
+                </div>
+
+                <div class="visualization-panel">
+                    <div class="beaker-container">
+                        <div class="beaker">
+                            <div class="solution" id="solution-visual"></div>
+                            <div class="beaker-label">
+                                <span id="beaker-concentration">0 mol/L</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Gases Simulator -->
+    <div class="modal-sim hidden" id="modal-gases">
+        <div class="modal-overlay" onclick="closeSimulator()"></div>
+        <div class="modal-content-sim gases-modal">
+            <button class="modal-close" onclick="closeSimulator()">✕</button>
+            <h2 class="modal-title">🎈 Simulador de Gases (PVT)</h2>
+
+            <div class="sim-layout">
+                <div class="controls-panel">
+                    <h4>Lei dos Gases:</h4>
+                    <select id="gas-law-select" class="sim-select" onchange="selectGasLaw()">
+                        <option value="boyle">Lei de Boyle (P × V = constante)</option>
+                        <option value="charles">Lei de Charles (V / T = constante)</option>
+                        <option value="gay-lussac">Lei de Gay-Lussac (P / T = constante)</option>
+                        <option value="ideal">Lei Geral (PV = nRT)</option>
+                    </select>
+
+                    <div class="control-group">
+                        <label>Pressão (atm): <span id="pressure-display">1.0</span></label>
+                        <input type="range" class="slider" id="pressure-slider" min="0.5" max="3" step="0.1" value="1"
+                            oninput="updateGas()">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Volume (L): <span id="volume-display">5.0</span></label>
+                        <input type="range" class="slider" id="volume-slider" min="1" max="10" step="0.5" value="5"
+                            oninput="updateGas()">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Temperatura (°C): <span id="temp-display-gas">25</span></label>
+                        <input type="range" class="slider" id="temp-slider-gas" min="-50" max="150" value="25"
+                            oninput="updateGas()">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Mols (n):</label>
+                        <input type="number" id="mols-input" class="sim-input" value="0.2" step="0.01"
+                            oninput="updateGas()">
+                    </div>
+
+                    <div class="result-panel">
+                        <div class="result-item">
+                            <span class="label">PV/nT:</span>
+                            <span class="value" id="constant-value">0.082</span>
+                        </div>
+                        <div class="info-text">R = 0.082 atm·L/(mol·K)</div>
+                    </div>
+                </div>
+
+                <div class="visualization-panel">
+                    <div class="balloon-container">
+                        <svg id="balloon-svg" width="300" height="300" viewBox="0 0 300 300">
+                            <ellipse id="balloon-shape" cx="150" cy="150" rx="60" ry="80" fill="rgba(66, 165, 245, 0.5)"
+                                stroke="#42a5f5" stroke-width="2" />
+                            <line x1="150" y1="230" x2="150" y2="270" stroke="#666" stroke-width="2" />
+                            <rect id="balloon-base" x="120" y="270" width="60" height="20" fill="#888" />
+                        </svg>
+                        <div class="gas-stats">
+                            <div>P: <span id="p-stat">1.0 atm</span></div>
+                            <div>V: <span id="v-stat">5.0 L</span></div>
+                            <div>T: <span id="t-stat">298 K</span></div>
+                        </div>
+                    </div>
+
+                    <div class="graph-container">
+                        <canvas id="gas-graph" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="education-script.js"></script>
+    <script src="physichem-sim.js"></script>
+</body>
+
+</html>
