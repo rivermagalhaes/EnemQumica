@@ -37,7 +37,14 @@
     </div>
 
     <!-- Main Content -->
-    <div class="game-container">
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('games')">🎮 Jogos Interativos</button>
+        <button class="tab-btn" onclick="switchTab('study')">📚 Estudo & Tutor</button>
+    </div>
+
+    <!-- GAMES SECTION -->
+    <div id="tab-games" class="game-container">
         <!-- Hero Section -->
         <section class="hero-game">
             <div class="hero-content-game">
@@ -107,6 +114,94 @@
             </div>
         </section>
     </div>
+
+    <!-- DASHBOARD & TUTOR SECTION -->
+    <div id="tab-study" class="game-container hidden">
+        <div id="tutor-auth-warning" class="hidden" style="text-align: center; padding: 2rem;">
+            <h3>🔒 Login Necessário</h3>
+            <p>Faça login para acessar o Tutor IA e salvar seu progresso de estudo.</p>
+            <a href="login.html" class="btn-module" style="display: inline-block; margin-top: 1rem;">Ir para Login</a>
+        </div>
+
+        <div id="tutor-dashboard-content" class="dashboard-grid">
+            <!-- Sidebar Stats -->
+            <div class="dashboard-sidebar">
+                <div class="card-dashboard">
+                    <div class="card-title">Seu Progresso</div>
+                    <div class="progress-container">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring-circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8"
+                                fill="transparent" r="52" cx="60" cy="60" />
+                            <circle class="progress-ring-circle" stroke="var(--color-primary)" stroke-width="8"
+                                fill="transparent" r="52" cx="60" cy="60" stroke-dasharray="326.72"
+                                stroke-dashoffset="326.72" />
+                        </svg>
+                        <div class="progress-text" id="dashboard-percent">0%</div>
+                    </div>
+                    <ul class="stats-list">
+                        <li><span>Tópicos:</span> <strong id="dashboard-completed">0/3</strong></li>
+                        <li><span>Tempo:</span> <strong id="dashboard-time">0h 0m</strong></li>
+                    </ul>
+                </div>
+
+                <div class="card-dashboard">
+                    <div class="card-title">📚 Módulos Recomendados</div>
+                    <div class="module-list" id="module-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Tutor Chat -->
+            <div class="dashboard-main">
+                <div class="card-dashboard">
+                    <div class="card-title">🤖 Tutor de IA Personalizado</div>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message ai-message">
+                                Olá! Sou seu tutor de Química Orgânica. Posso explicar conceitos, criar quizzes ou tirar
+                                dúvidas. Vamos começar? 🧪
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input" class="chat-input"
+                                placeholder="Ex: O que é craqueamento do petróleo?">
+                            <button class="chat-send-btn" onclick="sendTutorMessage()">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Module Modal -->
+    <div id="module-modal" class="modal-game hidden">
+        <div class="modal-overlay-game" onclick="closeModuleModal()"></div>
+        <div class="modal-content-game" style="max-width: 800px;">
+            <button class="modal-close-game" onclick="closeModuleModal()">✕</button>
+            <h2 class="modal-title" id="module-modal-title"></h2>
+            <div id="module-modal-body" style="margin-top: 1.5rem; max-height: 60vh; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Scripts Integration -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.game-container').forEach(c => c.classList.add('hidden'));
+
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            if (tabId === 'study') {
+                initTutor();
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="login-script.js"></script> <!-- Reusing for Auth/Config -->
+    <script src="organic-content.js"></script>
+    <script src="organic-tutor.js"></script>
 
     <!-- Molecule Builder Modal -->
     <div class="modal-game hidden" id="builder-modal">

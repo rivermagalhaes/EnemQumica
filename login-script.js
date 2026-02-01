@@ -1,4 +1,29 @@
-// ==================== DOM ELEMENTS ====================
+// ==================== CONFIGURAÇÃO SUPABASE ====================
+// TODO: Substitua pelas suas credenciais reais do Supabase
+// Você pode encontrá-las em: https://supabase.com/dashboard/project/_/settings/api
+const SUPABASE_URL = 'https://pmmnvlmgrmvziswerogh.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtbW52bG1ncm12emlzd2Vyb2doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MTY4NTksImV4cCI6MjA4NTM5Mjg1OX0.ylQLOqmoZNIzrr-tW3ClIQ-2zZydeuoK38F2nCOZyFE';
+
+// Inicializa o cliente Supabase
+let supabase;
+try {
+    if (window.supabase) {
+        // Verifica se as chaves foram configuradas
+        if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') {
+            console.warn('⚠️ Credenciais do Supabase não configuradas. O login funcionará apenas em modo de simulação (erro).');
+        } else {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            window.supabaseClient = supabase; // Expose globally for other scripts
+            console.log('✅ Supabase inicializado com sucesso de login-script.js!');
+        }
+    } else {
+        console.error('❌ Biblioteca Supabase não encontrada.');
+    }
+} catch (error) {
+    console.error('Erro ao inicializar Supabase:', error);
+}
+
+// ==================== ELEMENTOS DO DOM ====================
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -14,57 +39,50 @@ const btnAppleLogin = document.getElementById('btn-apple-login');
 const forgotPasswordLink = document.getElementById('forgot-password-link');
 const signupLink = document.getElementById('signup-link');
 
-// ==================== PASSWORD TOGGLE ====================
-togglePasswordBtn.addEventListener('click', () => {
+// ==================== ALTERNAR SENHA ====================
+togglePasswordBtn?.addEventListener('click', () => {
     const isPassword = passwordInput.type === 'password';
 
-    // Toggle input type
+    // Alternar tipo de input
     passwordInput.type = isPassword ? 'text' : 'password';
 
-    // Toggle icons
+    // Alternar ícones
     eyeIcon.classList.toggle('hidden');
     eyeOffIcon.classList.toggle('hidden');
 
-    // Update aria-label
+    // Atualizar aria-label
     togglePasswordBtn.setAttribute('aria-label', isPassword ? 'Ocultar senha' : 'Mostrar senha');
 
-    // Add animation
+    // Adicionar animação
     togglePasswordBtn.style.transform = 'scale(0.9)';
     setTimeout(() => {
         togglePasswordBtn.style.transform = 'scale(1)';
     }, 150);
 });
 
-// ==================== FORM VALIDATION ====================
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-function validatePassword(password) {
-    return password.length >= 6;
-}
-
+// ==================== VALIDAÇÃO & ERROS ====================
 function showError(input, message) {
-    // Add error class
+    // Adicionar classe de erro
     input.classList.add('error');
 
-    // Remove existing error message
-    const existingError = input.parentElement.parentElement.querySelector('.error-message');
+    // Remover mensagem existente
+    const existingError = input.closest('.form-group').querySelector('.error-message');
     if (existingError) {
         existingError.remove();
     }
 
-    // Create and add error message
+    // Criar e adicionar mensagem de erro
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
-    input.parentElement.parentElement.appendChild(errorDiv);
 
-    // Remove error on input
+    // Inserir após o input-wrapper
+    input.closest('.input-wrapper').after(errorDiv);
+
+    // Remover erro ao digitar
     input.addEventListener('input', function removeErrorHandler() {
         input.classList.remove('error');
-        const errorMsg = input.parentElement.parentElement.querySelector('.error-message');
+        const errorMsg = input.closest('.form-group').querySelector('.error-message');
         if (errorMsg) {
             errorMsg.remove();
         }
@@ -72,23 +90,19 @@ function showError(input, message) {
     });
 }
 
-// ==================== LOGIN AUTHENTICATION ====================
-const VALID_CREDENTIALS = {
-    email: 'teste@enem.com',
-    password: '123456'
-};
-
-loginForm?.addEventListener('submit', (e) => {
+// ==================== AUTENTICAÇÃO DE LOGIN ====================
+loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
 
-    // Clear previous errors
+    // Limpar erros anteriores
     emailInput.classList.remove('error');
     passwordInput.classList.remove('error');
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
 
-    // Validate inputs
+    // Validação básica
     if (!email || !password) {
         showNotification('Por favor, preencha todos os campos!', 'error');
         if (!email) emailInput.classList.add('error');
@@ -96,108 +110,120 @@ loginForm?.addEventListener('submit', (e) => {
         return;
     }
 
-    // Check credentials
-    if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-        showNotification('Login realizado com sucesso! 🎉', 'success');
+    // Feedback visual de carregamento
+    const originalBtnText = btnSubmit.innerHTML;
+    btnSubmit.classList.add('loading');
+    btnSubmit.disabled = true;
 
-        // Save user data
-        const userData = {
-            email: email,
-            name: 'Estudante ENEM',
-            loginTime: new Date().toISOString()
-        };
-
-        if (rememberMeCheckbox.checked) {
-            localStorage.setItem('enemflash_user', JSON.stringify(userData));
-            localStorage.setItem('rememberedEmail', email);
-        } else {
-            sessionStorage.setItem('enemflash_user', JSON.stringify(userData));
+    try {
+        if (!supabase) {
+            throw new Error('Supabase não configurado. Verifique as credenciais no script.');
         }
 
-        // Redirect after delay
-        btnSubmit.classList.add('loading');
-        btnSubmit.disabled = true;
+        // Login com Supabase
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
 
+        if (error) {
+            throw error;
+        }
+
+        // Login bem-sucedido
+        showNotification('Login realizado com sucesso! 🎉', 'success');
+
+        // Salvar preferências (sem dados sensíveis)
+        if (rememberMeCheckbox.checked) {
+            localStorage.setItem('rememberedEmail', email);
+        } else {
+            localStorage.removeItem('rememberedEmail');
+        }
+
+        // Redirecionamento seguro
         setTimeout(() => {
             window.location.href = 'index.html';
         }, 1500);
 
-    } else {
-        showNotification('Email ou senha incorretos!', 'error');
+    } catch (error) {
+        console.error('Erro de Login:', error);
+
+        // Tratamento de mensagens de erro amigáveis
+        let errorMessage = 'Erro ao realizar login. Tente novamente.';
+        if (error.message.includes('Invalid login credentials')) {
+            errorMessage = 'Email ou senha incorretos.';
+        } else if (error.message.includes('not configured')) {
+            errorMessage = 'Erro de configuração do sistema.';
+        }
+
+        showNotification(errorMessage, 'error');
+
+        // Destacar campos
         emailInput.classList.add('error');
         passwordInput.classList.add('error');
 
-        // Shake animation
+        // Animação de erro
         loginForm.classList.add('shake');
         setTimeout(() => {
             loginForm.classList.remove('shake');
         }, 500);
+
+    } finally {
+        // Restaurar botão
+        btnSubmit.classList.remove('loading');
+        btnSubmit.disabled = false;
     }
 });
 
-// Simulate login API call
-function simulateLogin(email, password, rememberMe) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            console.log('Login attempt:', { email, rememberMe });
+// ==================== LOGIN SOCIAL ====================
+// Função genérica para login social
+async function handleSocialLogin(provider) {
+    if (!supabase) {
+        showNotification('Login social indisponível (configuração pendente).', 'error');
+        return;
+    }
 
-            // Simulate successful login
-            resolve({ success: true });
+    showNotification(`Conectando com ${provider}...`, 'info');
 
-            // Uncomment to simulate error:
-            // reject({ message: 'Email ou senha incorretos' });
-        }, 1500);
-    });
+    try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: provider.toLowerCase(),
+            options: {
+                redirectTo: window.location.origin + '/index.html'
+            }
+        });
+
+        if (error) throw error;
+
+    } catch (error) {
+        console.error(`Erro login ${provider}:`, error);
+        showNotification(`Erro ao conectar com ${provider}.`, 'error');
+    }
 }
 
-// ==================== SOCIAL LOGIN ====================
-btnGoogleLogin.addEventListener('click', () => {
+// Event Listeners para Social
+btnGoogleLogin?.addEventListener('click', (e) => {
+    addRippleEffect(e.currentTarget);
     handleSocialLogin('Google');
 });
 
-btnFacebookLogin.addEventListener('click', () => {
+btnFacebookLogin?.addEventListener('click', (e) => {
+    addRippleEffect(e.currentTarget);
     handleSocialLogin('Facebook');
 });
 
-btnAppleLogin.addEventListener('click', () => {
+btnAppleLogin?.addEventListener('click', (e) => {
+    addRippleEffect(e.currentTarget);
     handleSocialLogin('Apple');
 });
 
-function handleSocialLogin(provider) {
-    addRippleEffect(event.currentTarget);
-    showNotification(`Conectando com ${provider}...`, 'info');
-
-    setTimeout(() => {
-        console.log(`Initiating ${provider} OAuth flow`);
-        // window.location.href = `/auth/${provider.toLowerCase()}`;
-    }, 500);
-}
-
-// ==================== NAVIGATION ====================
-btnBack.addEventListener('click', () => {
-    console.log('Navigating back to home');
+// ==================== NAVEGAÇÃO ====================
+btnBack?.addEventListener('click', () => {
     window.location.href = 'index.html';
 });
 
-forgotPasswordLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    showNotification('Redirecionando para recuperação de senha...', 'info');
-    setTimeout(() => {
-        console.log('Navigating to forgot password');
-        // window.location.href = '/forgot-password';
-    }, 500);
-});
-
-signupLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    showNotification('Redirecionando para cadastro...', 'info');
-    setTimeout(() => {
-        console.log('Navigating to signup');
-        // window.location.href = '/signup';
-    }, 500);
-});
-
-// ==================== RIPPLE EFFECT ====================
+// ==================== UTILITÁRIOS (Ripple & Notification) ====================
+// Efeito Ripple (Mantido Visual)
 function addRippleEffect(element) {
     const ripple = document.createElement('span');
     const rect = element.getBoundingClientRect();
@@ -217,92 +243,12 @@ function addRippleEffect(element) {
     }, 600);
 }
 
-// Add ripple styles
-const style = document.createElement('style');
-style.textContent = `
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s ease-out;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-    
-    button {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .notification {
-        position: fixed;
-        top: 2rem;
-        right: 2rem;
-        padding: 1rem 1.5rem;
-        background: hsl(240, 15%, 20%);
-        backdrop-filter: blur(20px);
-        border: 1px solid hsla(0, 0%, 100%, 0.15);
-        border-radius: 1rem;
-        color: white;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
-        z-index: 1000;
-        animation: slideInRight 0.4s ease, slideOutRight 0.4s ease 2.1s;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        max-width: 320px;
-    }
-    
-    .notification.info::before {
-        content: 'ℹ️';
-        font-size: 1.25rem;
-    }
-    
-    .notification.success::before {
-        content: '✅';
-        font-size: 1.25rem;
-    }
-    
-    .notification.error::before {
-        content: '❌';
-        font-size: 1.25rem;
-    }
-    
-    @keyframes slideInRight {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// ==================== NOTIFICATION SYSTEM ====================
+// Sistema de Notificações
 function showNotification(message, type = 'info') {
+    // Remove notificações anteriores para não empilhar muitas
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.textContent = message;
@@ -311,45 +257,26 @@ function showNotification(message, type = 'info') {
 
     setTimeout(() => {
         notification.remove();
-    }, 2500);
+    }, 3000);
 }
 
-// ==================== AUTO-FOCUS ====================
-emailInput.focus();
-
-// ==================== REMEMBER ME ====================
-// Check if user previously selected "remember me"
+// ==================== INICIALIZAÇÃO ====================
 window.addEventListener('DOMContentLoaded', () => {
+    // Focar no email ao carregar
+    emailInput?.focus();
+
+    // Recuperar e preencher email salvo ("Lembrar-me")
     const savedEmail = localStorage.getItem('rememberedEmail');
-    if (savedEmail) {
+    if (savedEmail && emailInput) {
         emailInput.value = savedEmail;
         rememberMeCheckbox.checked = true;
-        passwordInput.focus();
+        passwordInput?.focus();
     }
+
+    console.log('🔐 Login pronto para uso seguro.');
 });
 
-rememberMeCheckbox.addEventListener('change', () => {
-    if (!rememberMeCheckbox.checked) {
-        localStorage.removeItem('rememberedEmail');
-    }
-});
-
-// Save email if remember me is checked (on successful login)
-function saveRememberedEmail(email) {
-    if (rememberMeCheckbox.checked) {
-        localStorage.setItem('rememberedEmail', email);
-    }
-}
-
-// ==================== KEYBOARD SHORTCUTS ====================
-document.addEventListener('keydown', (e) => {
-    // ESC to go back
-    if (e.key === 'Escape') {
-        btnBack.click();
-    }
-});
-
-// ==================== ACCESSIBILITY ENHANCEMENTS ====================
+// Acessibilidade no Teclado
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -359,13 +286,4 @@ document.querySelectorAll('button').forEach(button => {
             }
         }
     });
-});
-
-// ==================== CONSOLE WELCOME ====================
-console.log('%c🔐 Login - MERCADOFLASH', 'font-size: 18px; font-weight: bold; color: #f97316;');
-console.log('%cBem-vindo de volta!', 'font-size: 14px; color: #d1d5db;');
-
-// ==================== READY STATE ====================
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Login page loaded successfully!');
 });

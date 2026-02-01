@@ -85,7 +85,7 @@ function updateXPDisplay() {
     document.getElementById('xp-value').textContent = `${GameState.user.xp} XP`;
 }
 
-function addXP(amount) {
+async function addXP(amount) {
     GameState.user.xp += amount;
     localStorage.setItem('organica_xp', GameState.user.xp);
     updateXPDisplay();
@@ -95,6 +95,29 @@ function addXP(amount) {
     localStorage.setItem('enemflash_xp', mainXP + amount);
 
     showNotification(`+${amount} XP ganhos!`, 'success');
+
+    // SYNC WITH SUPABASE
+    if (typeof supabase !== 'undefined') {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            // First get current remote XP to avoid overwrite conflicts
+            const { data: profile } = await supabase
+                .from('student_profiles')
+                .select('xp')
+                .eq('id', user.id)
+                .single();
+
+            if (profile) {
+                await supabase
+                    .from('student_profiles')
+                    .update({
+                        xp: profile.xp + amount,
+                        last_active: new Date().toISOString()
+                    })
+                    .eq('id', user.id);
+            }
+        }
+    }
 
     // Check achievements
     checkGlobalAchievements();
