@@ -1,0 +1,6 @@
+name = "enem-quimica"
+compatibility_date = "2024-01-31"
+pages_build_output_dir = "out"
+
+# Configuração para servir site estático (Pages)
+# Certifique-se de que o comando de build é 'npm run build'
