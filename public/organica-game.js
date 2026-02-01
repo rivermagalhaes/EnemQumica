@@ -1,4 +1,3 @@
-// ==================== GAME STATE ====================
 const GameState = {
     user: {
         xp: parseInt(localStorage.getItem('organica_xp')) || 0,
@@ -18,6 +17,9 @@ const GameState = {
         foundCompounds: []
     }
 };
+
+// Global Supabase Client
+const supabase = window.supabaseClient;
 
 // ==================== DATA: ORGANIC FUNCTIONS ====================
 const ORGANIC_FUNCTIONS = [
